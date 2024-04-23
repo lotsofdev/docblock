@@ -1,0 +1,81 @@
+{% extends 'sugar/readme/layouts/main/main.twig' %}
+{% block body %}
+
+<!--
+/**
+ * @name            README
+ * @namespace       doc
+ * @type            Markdown
+ * @platform        md
+ * @status          stable
+ * @menu            Documentation           /doc/readme
+ *
+ * @since           2.0.0
+ * @author    Olivier Bossel <olivier.bossel@gmail.com> (https://coffeekraken.io)
+ */
+-->
+
+## SDocblock
+
+This package expose a simple `SDocblock` class that let you parse docblocks into a file or a raw string.
+
+## Features
+
+-   Support **{{ tags|length }}** tags (see the list bellow)
+-   Can render markdown in your tag contents
+-   Ability to filter blocks with custom filter functions
+-   And more...
+
+## Usage
+
+Here's a simple example how to use the SDocblock class:
+
+```js
+import __SDocblock from '@coffeekraken/s-docblock';
+
+// parsing a file
+const docblock = new __SDocblock('/my/cool/file.js');
+const blocks = await docblock.parse();
+
+// parsing inline string
+// when using this, some tags that content file path, etc, will
+// not be resolved correctly...
+// you can specify a "filePath" in the settings to prevent this issue
+const stringDocblock = new __SDocblock('...my content to parse...');
+const stringBlocks = await docblock.parse();
+```
+
+## Supported tags
+
+Here's the list of supported tags. This can be enhanced if needed (documentation coming soon):
+
+{% for key, tag in tags %}
+-   **@{{key}}**
+{% endfor %}
+
+## Register a new tag
+
+To register a new tag, you just have to call the static `registerTag` method on the `SDocblockBlock` class like so:
+
+```js
+import { SDocblockBlock } from '@coffeekraken/s-docblock';
+SDocblockBlock.registerTag('myTagName', (data, blockSettings) => {
+    // handle your tag logic here...
+    // and return what you want as a result
+    return {
+        something: 'cool',
+    };
+});
+```
+
+## Settings
+
+{% include 'sugar/interface/fromDocmap/fromDocmap.twig' with {
+    docmapItem: docmap.map['@coffeekraken.s-docblock.shared.interface.SDocblockSettingsInterface']
+} only %}
+
+## API
+
+For more information about the API, please check out [the API documentation](/api/@coffeekraken.s-config-inline-adapter.shared.SDocblock)
+
+{% endblock %}
