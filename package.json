@@ -5,23 +5,20 @@
     "type": "module",
     "author": "Olivier Bossel <olivier.bossel@gmail.com> (https://coffeekraken.io)",
     "license": "MIT",
-    "dependencies": {
-        "@coffeekraken/sugar": "^0.0.1",
-        "find-in-files": "^0.5.0",
-        "marked": "^9.0.2",
-        "minimatch": "^3.1.2"
+    "scripts": {
+        "dev": "tsc --watch",
+        "build": "tsc"
     },
-    "main": "dist/pkg/cjs/shared/exports.js",
-    "module": "dist/pkg/esm/shared/exports.js",
+    "dependencies": {
+        "@lotsof/sugar": "^0.0.1",
+        "marked": "^9.0.2",
+        "minimatch": "^3.1.2",
+        "typescript": "^5.4.5"
+    },
+    "main": "dist/shared/exports.js",
+    "module": "dist/esm/shared/exports.js",
     "exports": {
-        "node": {
-            "require": "./dist/pkg/cjs/node/exports.js",
-            "import": "./dist/pkg/esm/node/exports.js"
-        },
-        "browser": {
-            "require": "./dist/pkg/cjs/shared/exports.js",
-            "import": "./dist/pkg/esm/shared/exports.js"
-        }
+        "default": "./dist/shared/exports.js"
     },
     "homepage": "https://lotsof.dev"
 }

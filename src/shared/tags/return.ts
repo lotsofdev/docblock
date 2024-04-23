@@ -1,6 +1,6 @@
 // @ts-nocheck
 
-import {__resolveTypeString} from '@coffeekraken/sugar/type';
+import { __resolveTypeString } from '@lotsof/sugar/type';
 
 /**
  * @name              return
@@ -22,18 +22,18 @@ import {__resolveTypeString} from '@coffeekraken/sugar/type';
  * @author 	Olivier Bossel <olivier.bossel@gmail.com>
  */
 async function returnTag(data, blockSettings) {
-    const stringArray = data.value.split(/\s{2,9999}|\t/).map((l) => l.trim());
+  const stringArray = data.value.split(/\s{2,9999}|\t/).map((l) => l.trim());
 
-    let type = stringArray && stringArray[0] ? stringArray[0] : null;
+  let type = stringArray && stringArray[0] ? stringArray[0] : null;
 
-    type = await __resolveTypeString(type);
+  type = await __resolveTypeString(type);
 
-    const description = new String(stringArray[1] ? stringArray[1].trim() : '');
-    description.render = true;
+  const description = new String(stringArray[1] ? stringArray[1].trim() : '');
+  description.render = true;
 
-    return {
-        type,
-        description,
-    };
+  return {
+    type,
+    description,
+  };
 }
 export default returnTag;

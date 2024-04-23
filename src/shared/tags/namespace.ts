@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { __namespaceCompliant } from '@coffeekraken/sugar/string';
+import { __namespaceCompliant } from '@lotsof/sugar/string';
 
 /**
  * @name              namespace
@@ -21,26 +21,26 @@ import { __namespaceCompliant } from '@coffeekraken/sugar/string';
  * @namespace 	Olivier Bossel <olivier.bossel@gmail.com>
  */
 function namespace(data, blockSettings) {
-    if (
-        data &&
-        data.value &&
-        typeof data.value === 'string' &&
-        data.value.trim() === ''
-    ) {
-        return true;
-    }
+  if (
+    data &&
+    data.value &&
+    typeof data.value === 'string' &&
+    data.value.trim() === ''
+  ) {
+    return true;
+  }
 
-    let namespace = data.value;
-    if (!namespace) return data.value;
+  let namespace = data.value;
+  if (!namespace) return data.value;
 
-    if (blockSettings.packageJson) {
-        namespace = __namespaceCompliant(
-            `${blockSettings.packageJson.name.replace(
-                '/',
-                '.',
-            )}.${namespace.replace(/\s{2,9999}|\t/gm, '-')}`,
-        );
-    }
-    return __namespaceCompliant(namespace.replace(/\s{2,9999}|\t/gm, '-'));
+  if (blockSettings.packageJson) {
+    namespace = __namespaceCompliant(
+      `${blockSettings.packageJson.name.replace('/', '.')}.${namespace.replace(
+        /\s{2,9999}|\t/gm,
+        '-',
+      )}`,
+    );
+  }
+  return __namespaceCompliant(namespace.replace(/\s{2,9999}|\t/gm, '-'));
 }
 export default namespace;

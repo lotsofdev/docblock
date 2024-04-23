@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { __urlFromString } from '@coffeekraken/sugar/url';
+import { __urlFromString } from '@lotsof/sugar/url';
 
 /**
  * @name              menuTag
@@ -21,24 +21,24 @@ import { __urlFromString } from '@coffeekraken/sugar/url';
  * @author 	Olivier Bossel <olivier.bossel@gmail.com>
  */
 function menuTag(data, blockSettings) {
-    if (data && data.value && typeof data.value === 'string') {
-        const parts = data.value.split(/\s{2,9999}|\t/).map((l) => l.trim());
+  if (data && data.value && typeof data.value === 'string') {
+    const parts = data.value.split(/\s{2,9999}|\t/).map((l) => l.trim());
 
-        let slug;
+    let slug;
 
-        if (parts.length > 1) {
-            slug = parts[1];
-        } else {
-            slug = parts[0].split('/').map((l) => {
-                return __urlFromString(l);
-            });
-        }
-
-        return {
-            tree: parts[0].split('/').map((l) => l.trim()),
-            slug,
-        };
+    if (parts.length > 1) {
+      slug = parts[1];
+    } else {
+      slug = parts[0].split('/').map((l) => {
+        return __urlFromString(l);
+      });
     }
-    return data.value;
+
+    return {
+      tree: parts[0].split('/').map((l) => l.trim()),
+      slug,
+    };
+  }
+  return data.value;
 }
 export default menuTag;

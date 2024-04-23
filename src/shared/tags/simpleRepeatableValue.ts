@@ -20,14 +20,14 @@
  * @author 	Olivier Bossel <olivier.bossel@gmail.com>
  */
 function simpleRepeatableValue(data, blockSettings) {
-    data = Array.from(data);
+  data = Array.from(data);
 
-    data = data.map((d) => {
-        const val = new String(d.value);
-        val.render = true;
-        return val;
-    });
+  data = data.map((d) => {
+    const val = new String(d.value);
+    val.render = true;
+    return val;
+  });
 
-    return data;
+  return data;
 }
 export default simpleRepeatableValue;

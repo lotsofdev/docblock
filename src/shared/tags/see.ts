@@ -20,21 +20,21 @@
  * @author 	Olivier Bossel <olivier.bossel@gmail.com>
  */
 function see(data, blockSettings) {
-    if (!Array.isArray(data)) data = [data];
+  if (!Array.isArray(data)) data = [data];
 
-    const res = [];
+  const res = [];
 
-    data.forEach((see) => {
-        if (!see.value) return;
-        const parts = see.value.split(/\s{2,9999}|\t/).map((l) => l.trim());
-        const url = parts[0],
-            description = new String(parts[1] ?? '');
-        description.render = true;
-        res.push({
-            url,
-            description,
-        });
+  data.forEach((see) => {
+    if (!see.value) return;
+    const parts = see.value.split(/\s{2,9999}|\t/).map((l) => l.trim());
+    const url = parts[0],
+      description = new String(parts[1] ?? '');
+    description.render = true;
+    res.push({
+      url,
+      description,
     });
-    return res;
+  });
+  return res;
 }
 export default see;

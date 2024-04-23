@@ -21,25 +21,25 @@
  */
 
 export interface IPlatform {
-    name: string;
-    description: string;
+  name: string;
+  description: string;
 }
 
 function param(data, blockSettings): IPlatform[] {
-    if (!Array.isArray(data)) data = [data];
+  if (!Array.isArray(data)) data = [data];
 
-    const res = [];
+  const res = [];
 
-    data.forEach((param) => {
-        if (!param.value) return;
+  data.forEach((param) => {
+    if (!param.value) return;
 
-        const parts = param.value.split(/\s{2,9999}|\t/).map((l) => l.trim());
+    const parts = param.value.split(/\s{2,9999}|\t/).map((l) => l.trim());
 
-        res.push({
-            name: parts[0],
-            description: parts[1] ?? '',
-        });
+    res.push({
+      name: parts[0],
+      description: parts[1] ?? '',
     });
-    return res;
+  });
+  return res;
 }
 export default param;

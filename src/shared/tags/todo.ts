@@ -21,29 +21,29 @@
  */
 
 export interface ITodo {
-    priority: 'low' | 'normal' | 'high';
-    description: string;
+  priority: 'low' | 'normal' | 'high';
+  description: string;
 }
 
 function todo(data, blockSettings): ITodo[] {
-    if (!Array.isArray(data)) data = [data];
+  if (!Array.isArray(data)) data = [data];
 
-    const res = [];
+  const res = [];
 
-    data.forEach((todo) => {
-        if (!todo.value) return;
+  data.forEach((todo) => {
+    if (!todo.value) return;
 
-        const parts = todo.value.split(/\s{2,9999}|\t/).map((l) => l.trim());
+    const parts = todo.value.split(/\s{2,9999}|\t/).map((l) => l.trim());
 
-        const priority = parts[1] ?? 'normal',
-            description = new String(parts[0] ?? '');
-        description.render = true;
+    const priority = parts[1] ?? 'normal',
+      description = new String(parts[0] ?? '');
+    description.render = true;
 
-        res.push({
-            priority,
-            description,
-        });
+    res.push({
+      priority,
+      description,
     });
-    return res;
+  });
+  return res;
 }
 export default todo;

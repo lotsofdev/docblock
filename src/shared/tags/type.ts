@@ -1,6 +1,6 @@
 // @ts-nocheck
 
-import {__resolveTypeString} from '@coffeekraken/sugar/type';
+import { __resolveTypeString } from '@lotsof/sugar/type';
 
 /**
  * @name              type
@@ -22,7 +22,7 @@ import {__resolveTypeString} from '@coffeekraken/sugar/type';
  * @author 	Olivier Bossel <olivier.bossel@gmail.com>
  */
 async function typeTag(data, blockSettings) {
-    const value = await __resolveTypeString(`{${data.value}}`);
-    return value;
+  const value = await __resolveTypeString(`{${data.value}}`);
+  return value;
 }
 export default typeTag;

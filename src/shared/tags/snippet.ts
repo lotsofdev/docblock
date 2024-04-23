@@ -20,14 +20,12 @@
  * @author 	Olivier Bossel <olivier.bossel@gmail.com>
  */
 function snippet(data, blockSettings) {
-    if (data.content && data.content[data.content.length - 1] === '') {
-        data.content = data.content.slice(0, -1);
-    }
-    return {
-        label: data.value,
-        code: Array.isArray(data.content)
-            ? data.content.join('\n')
-            : data.content,
-    };
+  if (data.content && data.content[data.content.length - 1] === '') {
+    data.content = data.content.slice(0, -1);
+  }
+  return {
+    label: data.value,
+    code: Array.isArray(data.content) ? data.content.join('\n') : data.content,
+  };
 }
 export default snippet;

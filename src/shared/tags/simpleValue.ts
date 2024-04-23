@@ -20,17 +20,17 @@
  * @author 	Olivier Bossel <olivier.bossel@gmail.com>
  */
 function simpleValue(data, blockSettings) {
-    if (
-        data &&
-        data.value &&
-        typeof data.value === 'string' &&
-        data.value.trim() === ''
-    ) {
-        return true;
-    }
+  if (
+    data &&
+    data.value &&
+    typeof data.value === 'string' &&
+    data.value.trim() === ''
+  ) {
+    return true;
+  }
 
-    const value = new String(data.value);
-    value.render = true;
-    return value;
+  const value = new String(data.value);
+  value.render = true;
+  return value;
 }
 export default simpleValue;

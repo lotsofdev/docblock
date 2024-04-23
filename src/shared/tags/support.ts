@@ -21,27 +21,27 @@
  */
 
 export interface IPlatform {
-    name: string;
-    description: string;
+  name: string;
+  description: string;
 }
 
 function support(data, blockSettings): IPlatform[] {
-    if (!Array.isArray(data)) data = [data];
+  if (!Array.isArray(data)) data = [data];
 
-    const res = [];
+  const res = [];
 
-    data.forEach((support) => {
-        if (!support.value) return;
+  data.forEach((support) => {
+    if (!support.value) return;
 
-        const parts = support.value.split(/\s{2,9999}|\t/).map((l) => l.trim());
-        const description = new String(parts[1] ?? '');
-        description.render = true;
+    const parts = support.value.split(/\s{2,9999}|\t/).map((l) => l.trim());
+    const description = new String(parts[1] ?? '');
+    description.render = true;
 
-        res.push({
-            name: parts[0],
-            description,
-        });
+    res.push({
+      name: parts[0],
+      description,
     });
-    return res;
+  });
+  return res;
 }
 export default support;

@@ -20,27 +20,27 @@
  * @author 	Olivier Bossel <olivier.bossel@gmail.com>
  */
 function contributor(data, blockSettings) {
-    data = Array.from(data);
+  data = Array.from(data);
 
-    const contributors: any[] = [];
+  const contributors: any[] = [];
 
-    data.forEach((d) => {
-        const contributorNfo =
-            /^([^<(]+?)?[ \t]*(?:<([^>(]+?)>)?[ \t]*(?:\(([^)]+?)\)|$)/gm.exec(
-                d.value,
-            );
-        if (!contributorNfo) return null;
+  data.forEach((d) => {
+    const contributorNfo =
+      /^([^<(]+?)?[ \t]*(?:<([^>(]+?)>)?[ \t]*(?:\(([^)]+?)\)|$)/gm.exec(
+        d.value,
+      );
+    if (!contributorNfo) return null;
 
-        contributors.push({
-            toString() {
-                return d.value;
-            },
-            name: contributorNfo[1],
-            email: contributorNfo[2],
-            url: contributorNfo[3],
-        });
+    contributors.push({
+      toString() {
+        return d.value;
+      },
+      name: contributorNfo[1],
+      email: contributorNfo[2],
+      url: contributorNfo[3],
     });
+  });
 
-    return contributors;
+  return contributors;
 }
 export default contributor;
