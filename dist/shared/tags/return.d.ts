@@ -1,15 +1,11 @@
-// @ts-nocheck
-
-import { __resolveTypeString } from '@lotsof/sugar/type.js';
-
 /**
- * @name              type
+ * @name              return
  * @namespace           shared.tags
  * @type              Function
  * @platform            node
  * @status              beta
  *
- * Parse the type tag
+ * Parse the return tag
  *
  * @param       {Object}          data        The data object parsed in the string
  * @param       {ISDocblockBlockSettings}     blockSettings     The SDocblockBlock settings
@@ -21,8 +17,8 @@ import { __resolveTypeString } from '@lotsof/sugar/type.js';
  * @since     2.0.0
  * @author 	Olivier Bossel <olivier.bossel@gmail.com>
  */
-async function typeTag(data, blockSettings) {
-  const value = await __resolveTypeString(`{${data.value}}`);
-  return value;
-}
-export default typeTag;
+declare function returnTag(data: any, blockSettings: any): Promise<{
+    type: any;
+    description: String;
+}>;
+export default returnTag;

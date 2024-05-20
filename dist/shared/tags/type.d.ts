@@ -1,7 +1,3 @@
-// @ts-nocheck
-
-import { __resolveTypeString } from '@lotsof/sugar/type.js';
-
 /**
  * @name              type
  * @namespace           shared.tags
@@ -21,8 +17,5 @@ import { __resolveTypeString } from '@lotsof/sugar/type.js';
  * @since     2.0.0
  * @author 	Olivier Bossel <olivier.bossel@gmail.com>
  */
-async function typeTag(data, blockSettings) {
-  const value = await __resolveTypeString(`{${data.value}}`);
-  return value;
-}
+declare function typeTag(data: any, blockSettings: any): Promise<any>;
 export default typeTag;

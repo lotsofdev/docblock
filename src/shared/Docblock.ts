@@ -159,7 +159,9 @@ class SDocblock implements IDocblock {
         );
       this.settings.filePath = source;
       this._source = __fs.readFileSync(source, 'utf8');
-      this._packageJson = __packageJsonSync(source);
+      this._packageJson = __packageJsonSync({
+        cwd: source,
+      });
     } else {
       this._source = source;
     }

@@ -1,15 +1,11 @@
-// @ts-nocheck
-
-import { __resolveTypeString } from '@lotsof/sugar/type.js';
-
 /**
- * @name              type
+ * @name              simpleRepeatableValue
  * @namespace           shared.tags
  * @type              Function
  * @platform            node
  * @status              beta
  *
- * Parse the type tag
+ * Parse the simpleRepeatableValue tag
  *
  * @param       {Object}          data        The data object parsed in the string
  * @param       {ISDocblockBlockSettings}     blockSettings     The SDocblockBlock settings
@@ -21,8 +17,5 @@ import { __resolveTypeString } from '@lotsof/sugar/type.js';
  * @since     2.0.0
  * @author 	Olivier Bossel <olivier.bossel@gmail.com>
  */
-async function typeTag(data, blockSettings) {
-  const value = await __resolveTypeString(`{${data.value}}`);
-  return value;
-}
-export default typeTag;
+declare function simpleRepeatableValue(data: any, blockSettings: any): any;
+export default simpleRepeatableValue;
