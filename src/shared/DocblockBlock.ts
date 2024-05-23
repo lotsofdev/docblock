@@ -80,6 +80,10 @@ import __typeTag from './tags/type.js';
  * @author 	Olivier Bossel <olivier.bossel@gmail.com>
  */
 
+export interface IDocblockBlock {
+  [key: string]: any;
+}
+
 export interface IDocblockBlockTagsMap {
   [key: string]: Function;
 }

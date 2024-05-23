@@ -1,6 +1,7 @@
 // @ts-nocheck
 
-import { __resolveTypeString } from '@lotsof/sugar/type.js';
+import { __resolveTypeString } from '@lotsof/sugar/type';
+import { IResolveTypeStringResult } from '../../../../sugar/dist/node/type/resolveTypeString.js';
 
 /**
  * @name              type
@@ -21,7 +22,10 @@ import { __resolveTypeString } from '@lotsof/sugar/type.js';
  * @since     2.0.0
  * @author 	Olivier Bossel <olivier.bossel@gmail.com>
  */
-async function typeTag(data, blockSettings) {
+async function typeTag(
+  data: any,
+  blockSettings: any,
+): Promise<IResolveTypeStringResult> {
   const value = await __resolveTypeString(`{${data.value}}`);
   return value;
 }

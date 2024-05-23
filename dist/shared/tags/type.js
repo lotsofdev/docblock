@@ -8,7 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { __resolveTypeString } from '@lotsof/sugar/type.js';
+import { __resolveTypeString } from '@lotsof/sugar/type';
 /**
  * @name              type
  * @namespace           shared.tags

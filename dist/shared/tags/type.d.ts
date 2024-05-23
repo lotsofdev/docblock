@@ -1,3 +1,4 @@
+import { IResolveTypeStringResult } from '../../../../sugar/dist/node/type/resolveTypeString.js';
 /**
  * @name              type
  * @namespace           shared.tags
@@ -17,5 +18,5 @@
  * @since     2.0.0
  * @author 	Olivier Bossel <olivier.bossel@gmail.com>
  */
-declare function typeTag(data: any, blockSettings: any): Promise<any>;
+declare function typeTag(data: any, blockSettings: any): Promise<IResolveTypeStringResult>;
 export default typeTag;

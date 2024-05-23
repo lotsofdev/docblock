@@ -53,6 +53,9 @@
  * @since     2.0.0
  * @author 	Olivier Bossel <olivier.bossel@gmail.com>
  */
+export interface IDocblockBlock {
+    [key: string]: any;
+}
 export interface IDocblockBlockTagsMap {
     [key: string]: Function;
 }
