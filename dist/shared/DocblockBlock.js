@@ -31,6 +31,61 @@ import __snippetTag from './tags/snippet.js';
 import __supportTag from './tags/support.js';
 import __todoTag from './tags/todo.js';
 import __typeTag from './tags/type.js';
+/**
+ * @name                DocblockBlock
+ * @namespace           shared
+ * @type                Class
+ * @platform            node
+ * @status              beta
+ *
+ * This class represent a docblock object that contains all the "tags" values and some features like:
+ * - Converting the block to markdown
+ * - More to come...
+ *
+ * @feature         `author` tag support
+ * @feature         `contributor` tag support
+ * @feature         `cssClass` tag support
+ * @feature         `description` tag support
+ * @feature         `event` tag support
+ * @feature         `example` tag support
+ * @feature         `install` tag support
+ * @feature         `menu` tag support
+ * @feature         `namespace` tag support
+ * @feature         `param` tag support
+ * @feature         `platform` tag support
+ * @feature         `return` tag support
+ * @feature         `see` tag support
+ * @feature         `snippet` tag support
+ * @feature         `support` tag support
+ * @feature         `todo` tag support
+ * @feature         `type` tag support
+ * @feature         All the other tags are treated like a `String` value
+ *
+ * @param         {String}       source      The docblock source.  Has to be a parsable docblock string
+ * @param         {Object}      [settings={}]       A settings object to configure your instance
+ *
+ * @setting         {String}        [filePath=null]         Specify the file path where the docblocks are parsed from
+ * @setting         {Any}           [packageJson={}]        Pass the current package.json data to add some metas to the docblocks
+ * @setting         {Boolean}       [renderMarkdown=false]              Specify if you want to render the markdown in the tags values or not
+ * @setting         {Any}           [markedOptions={}]                  Specify some [marked](https://www.npmjs.com/package/marked) options to render markdown
+ * @setting         {Function}      [sortFunction=function(a, b) {})]       Specify a function to sort the docblocks. A default sort is applied
+ * @setting         {Record<String, Function>}      [tags={}]           Specify some tags you want to include with a function that will be used to actually parse his value and return the formatted one. Some tags are built-in. Look at the features section.
+ *
+ * @todo        tests
+ * @todo        Support "feature" tag
+ * @todo        Check the supported tags
+ *
+ * @snippet         __DocblockBlock($1)
+ * new __DocblockBlock($1)
+ *
+ * @example         js
+ * import { __DocblockBlock } from '@lotsof/s-docblock';
+ * const docblock = new __DocblockBlock(myDocblockString);
+ * const docblock.toObject();
+ *
+ * @since     2.0.0
+ * @author 	Olivier Bossel <olivier.bossel@gmail.com>
+ */
 // @ts-ignore
 class DocblockBlock {
     /**
@@ -68,9 +123,10 @@ class DocblockBlock {
             filePath: null,
             packageJson: null,
             renderMarkdown: false,
+            renderMarkdownProps: [],
             markedOptions: {},
             tags: DocblockBlock.tagsMap,
-        }, settings);
+        }, settings !== null && settings !== void 0 ? settings : {});
         this._source = source
             .trim()
             .replace(/\s\*\s/gm, '\n * ')
@@ -199,6 +255,7 @@ class DocblockBlock {
                     line = line.replace('*/', '');
                     line = line.replace('* ', '');
                     line = line.replace('*', '');
+                    line = line.replace(/\\@/g, '@');
                     if (line.trim().length) {
                         currentContent.push(line);
                     }
@@ -241,26 +298,37 @@ class DocblockBlock {
                     finalDocblockObj[prop] = __simpleValueTag(value, this.settings);
                 }
                 if (this.settings.renderMarkdown) {
-                    function renderMarkdown(data) {
-                        if (data instanceof String && data.render === true) {
-                            return __marked.parseInline(data.toString());
+                    const renderMarkdown = (data, path) => {
+                        if (!this.settings.renderMarkdownProps.length ||
+                            !this.settings.renderMarkdownProps.includes(path.join('.'))) {
+                            return data;
+                        }
+                        if (typeof data === 'string') {
+                            if (data.split('\n').length > 1) {
+                                return __marked.parse(data);
+                            }
+                            else {
+                                return __marked.parseInline(data);
+                            }
                         }
                         else if (Array.isArray(data)) {
-                            return data.map((item) => {
-                                return renderMarkdown(item);
+                            return data.map((item, i) => {
+                                return renderMarkdown(item, [...path]);
                             });
                         }
                         else if (__isPlainObject(data)) {
                             Object.keys(data).forEach((key) => {
-                                data[key] = renderMarkdown(data[key]);
+                                data[key] = renderMarkdown(data[key], [...path, key]);
                             });
                             return data;
                         }
                         else {
                             return data;
                         }
-                    }
-                    finalDocblockObj[prop] = renderMarkdown(finalDocblockObj[prop]);
+                    };
+                    finalDocblockObj[prop] = renderMarkdown(finalDocblockObj[prop], [
+                        prop,
+                    ]);
                 }
             }
             // save the raw string
@@ -360,9 +428,6 @@ DocblockBlock.registerTag('install', __installTag);
 DocblockBlock.registerTag('feature', __simpleRepeatableValue);
 DocblockBlock.registerTag('description', __descriptionTag);
 DocblockBlock.registerTag('desc', __descriptionTag);
-// DocblockBlock.registerTag('yields', __yieldsTag);
-// DocblockBlock.registerTag('typedef', __typedefTag);
-// DocblockBlock.registerTag('throws', __throwsTag);
 DocblockBlock.registerTag('see', __seeTag);
 DocblockBlock.registerTag('return', __returnTag);
 DocblockBlock.registerTag('type', __typeTag);
@@ -375,11 +440,6 @@ DocblockBlock.registerTag('namespace', __namespaceTag);
 DocblockBlock.registerTag('menu', __menuTag);
 DocblockBlock.registerTag('cssClass', __cssClass);
 DocblockBlock.registerTag('support', __supportTag);
-// DocblockBlock.registerTag('listens', __listensTag);
-// DocblockBlock.registerTag('member', __memberTag);
-// DocblockBlock.registerTag('var', __memberTag);
-// DocblockBlock.registerTag('event', __eventTag);
-// DocblockBlock.registerTag('borrows', __borrowsTag);
 DocblockBlock.registerTag('snippet', __snippetTag);
 DocblockBlock.registerTag('example', __exampleTag);
 DocblockBlock.registerTag('todo', __todoTag);

@@ -23,8 +23,7 @@ function simpleRepeatableValue(data, blockSettings) {
   data = Array.from(data);
 
   data = data.map((d) => {
-    const val = new String(d.value);
-    val.render = true;
+    const val = d.value;
     return val;
   });
 

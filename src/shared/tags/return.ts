@@ -28,8 +28,7 @@ async function returnTag(data, blockSettings) {
 
   type = await __resolveTypeString(type);
 
-  const description = new String(stringArray[1] ? stringArray[1].trim() : '');
-  description.render = true;
+  const description = stringArray[1] ? stringArray[1].trim() : '';
 
   return {
     type,

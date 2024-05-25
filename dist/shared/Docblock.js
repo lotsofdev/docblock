@@ -14,6 +14,47 @@ import __fs from 'fs';
 import { __isNode } from '@lotsof/sugar/is';
 import { __deepMerge } from '@lotsof/sugar/object';
 import __DocblockBlock from './DocblockBlock.js';
+import { __getConfig } from '@lotsof/config';
+import __defaults from './defaults.js';
+/**
+ *
+ * @name                    Dockblock
+ * @namespace               shared
+ * @type                    Class
+ * @platform                node
+ * @status                  beta
+ *
+ * This is the main class that expose the methods like "parse", etc...
+ * You have to instanciate it by passing a settings object. Here's the available options:
+ *
+ * @param       {String|Object}     source        The docblock source. Can be either a string to parse or a filePath
+ * @param       {Object}      [settings={}]       An object of settings to configure the SDocblock instance:
+ *
+ * @setting         {String}        [filePath=null]         Specify the file path where the docblocks are parsed from
+ * @setting         {Function}      [filter=null]           Specify a function that will filter the SDocblockBlock items
+ * @setting         {Record<String, Function|Regex>}        [filterByTag={}]        Specify some filters by tag. Can be a regex or a function
+ * @setting         {Boolean}       [renderMarkdown=false]              Specify if you want to render the markdown in the tags values or not
+ * @setting         {Any}           [markedOptions={}]                  Specify some [marked](https://www.npmjs.com/package/marked) options to render markdown
+ * @setting         {Function}      [sortFunction=function(a, b) {})]       Specify a function to sort the docblocks. A default sort is applied
+ *
+ * @todo        tests
+ * @todo        interface
+ * @todo        doc
+ *
+ * @snippet         __SDocblock($1)
+ * new __SDocblock($1)
+ *
+ * @example         js
+ * import __SDocblock from '@lotsof/s-docblock';
+ * const docblock = new __SDocblock(source, {
+ *    // override some settings here...
+ * });
+ * const blocks = docblock.parse();
+ *
+ *
+ * @since     2.0.0
+ * @author 	Olivier Bossel <olivier.bossel@gmail.com>
+ */
 // @ts-ignore
 class SDocblock {
     /**
@@ -25,6 +66,7 @@ class SDocblock {
      * @author 	Olivier Bossel <olivier.bossel@gmail.com>
      */
     constructor(source, settings) {
+        var _a;
         /**
          * @name            _source
          * @type            String|Array<Object>
@@ -60,34 +102,7 @@ class SDocblock {
          * @author 	Olivier Bossel <olivier.bossel@gmail.com> (https://lotsof.dev)
          */
         this._parsed = false;
-        this.settings = __deepMerge({
-            filter: undefined,
-            filterByTag: undefined,
-            sortFunction: (a, b) => {
-                var _a, _b, _c, _d, _e, _f;
-                let res = 0;
-                if (!b || !a)
-                    return res;
-                const aObj = a.toObject(), bObj = b.toObject();
-                // if (.object.namespace && !aObj.namespace) res -= 1;
-                if (bObj.namespace)
-                    res += 1;
-                if (((_b = (_a = bObj.type) === null || _a === void 0 ? void 0 : _a.toLowerCase) === null || _b === void 0 ? void 0 : _b.call(_a)) === 'class')
-                    res += 1;
-                if (bObj.constructor)
-                    res += 1;
-                if (bObj.private)
-                    res += 1;
-                if (((_d = (_c = bObj.type) === null || _c === void 0 ? void 0 : _c.toLowerCase) === null || _d === void 0 ? void 0 : _d.call(_c)) === 'function')
-                    res += 1;
-                if (((_e = bObj.name) === null || _e === void 0 ? void 0 : _e.length) > ((_f = aObj.name) === null || _f === void 0 ? void 0 : _f.length))
-                    res += 1;
-                return res;
-            },
-            filePath: null,
-            renderMarkdown: false,
-            markedOptions: {},
-        }, settings || {});
+        this.settings = __deepMerge(__defaults.settings, (_a = __getConfig('docblock.settings')) !== null && _a !== void 0 ? _a : {}, settings || {});
         // check if the source is path
         if (__isPath(source)) {
             if (!__isNode())
@@ -230,6 +245,7 @@ class SDocblock {
                     packageJson: this._packageJson,
                     filePath: this.settings.filePath || '',
                     renderMarkdown: this.settings.renderMarkdown,
+                    renderMarkdownProps: this.settings.renderMarkdownProps,
                     markedOptions: this.settings.markedOptions,
                 });
                 yield docblockBlock.parse();

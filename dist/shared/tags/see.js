@@ -27,8 +27,7 @@ function see(data, blockSettings) {
         if (!see.value)
             return;
         const parts = see.value.split(/\s{2,9999}|\t/).map((l) => l.trim());
-        const url = parts[0], description = new String((_a = parts[1]) !== null && _a !== void 0 ? _a : '');
-        description.render = true;
+        const url = parts[0], description = (_a = parts[1]) !== null && _a !== void 0 ? _a : '';
         res.push({
             url,
             description,

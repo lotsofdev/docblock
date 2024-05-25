@@ -33,8 +33,7 @@ function returnTag(data, blockSettings) {
         const stringArray = data.value.split(/\s{2,9999}|\t/).map((l) => l.trim());
         let type = stringArray && stringArray[0] ? stringArray[0] : null;
         type = yield __resolveTypeString(type);
-        const description = new String(stringArray[1] ? stringArray[1].trim() : '');
-        description.render = true;
+        const description = stringArray[1] ? stringArray[1].trim() : '';
         return {
             type,
             description,

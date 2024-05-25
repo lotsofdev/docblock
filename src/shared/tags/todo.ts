@@ -36,8 +36,7 @@ function todo(data, blockSettings): ITodo[] {
     const parts = todo.value.split(/\s{2,9999}|\t/).map((l) => l.trim());
 
     const priority = parts[1] ?? 'normal',
-      description = new String(parts[0] ?? '');
-    description.render = true;
+      description = parts[0] ?? '';
 
     res.push({
       priority,

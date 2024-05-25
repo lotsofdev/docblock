@@ -26,11 +26,10 @@ function description(data, blockSettings) {
     }
     if (!data.content)
         return '';
-    const description = new String(data.content
-        .map((c) => c.trim())
+    const description = data.content
+        .map((c) => c.replace(/^\s/, ''))
         .join('\n')
-        .trim());
-    description.render = true;
+        .trim();
     return description;
 }
 export default description;

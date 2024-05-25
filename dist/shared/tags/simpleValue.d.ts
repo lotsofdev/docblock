@@ -17,5 +17,5 @@
  * @since     2.0.0
  * @author 	Olivier Bossel <olivier.bossel@gmail.com>
  */
-declare function simpleValue(data: any, blockSettings: any): true | String;
+declare function simpleValue(data: any, blockSettings: any): any;
 export default simpleValue;

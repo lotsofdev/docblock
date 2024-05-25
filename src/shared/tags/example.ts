@@ -40,17 +40,16 @@ function example(data, blockSettings) {
       };
 
       if (result.title) {
-        result.title = new String(result.title);
-        result.title.render = true;
+        result.title = result.title;
       }
       if (result.description) {
-        result.description = new String(result.description);
-        result.description.render = true;
+        result.description = result.description;
       }
 
       return result;
     })
     .filter((item) => item !== null);
+
   return data;
 }
 export default example;

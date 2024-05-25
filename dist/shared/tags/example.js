@@ -38,12 +38,10 @@ function example(data, blockSettings) {
                 : item.content.replace(/\\@/, '@'),
         };
         if (result.title) {
-            result.title = new String(result.title);
-            result.title.render = true;
+            result.title = result.title;
         }
         if (result.description) {
-            result.description = new String(result.description);
-            result.description.render = true;
+            result.description = result.description;
         }
         return result;
     })

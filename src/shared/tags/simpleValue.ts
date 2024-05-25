@@ -29,8 +29,7 @@ function simpleValue(data, blockSettings) {
     return true;
   }
 
-  const value = new String(data.value);
-  value.render = true;
+  const value = data.value;
   return value;
 }
 export default simpleValue;

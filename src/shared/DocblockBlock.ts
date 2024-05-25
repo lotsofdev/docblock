@@ -4,6 +4,8 @@ import { __deepMerge } from '@lotsof/sugar/object';
 import { __namespaceCompliant } from '@lotsof/sugar/string';
 import { marked as __marked } from 'marked';
 
+import type { IDocblockBlockSettings, IDocblockBlockTagsMap } from './types.js';
+
 import __authorTag from './tags/author.js';
 import __contributorTag from './tags/contributor.js';
 import __cssClass from './tags/cssClass.js';
@@ -80,22 +82,6 @@ import __typeTag from './tags/type.js';
  * @author 	Olivier Bossel <olivier.bossel@gmail.com>
  */
 
-export interface IDocblockBlock {
-  [key: string]: any;
-}
-
-export interface IDocblockBlockTagsMap {
-  [key: string]: Function;
-}
-
-export interface IDocblockBlockSettings {
-  filePath?: string;
-  packageJson: any;
-  renderMarkdown: boolean;
-  markedOptions: any;
-  tags: IDocblockBlockTagsMap;
-}
-
 // @ts-ignore
 class DocblockBlock {
   /**
@@ -107,7 +93,7 @@ class DocblockBlock {
    *
    * @author 	Olivier Bossel <olivier.bossel@gmail.com>
    */
-  static tagsMap: IDocblockBlockTagsMap = {};
+  public static tagsMap: IDocblockBlockTagsMap = {};
 
   /**
    * @name           settings
@@ -118,7 +104,7 @@ class DocblockBlock {
    *
    * @author 	Olivier Bossel <olivier.bossel@gmail.com>
    */
-  settings: IDocblockBlockSettings;
+  public settings: IDocblockBlockSettings;
 
   /**
    * @name          _source
@@ -129,7 +115,7 @@ class DocblockBlock {
    *
    * @author         Olivier Bossel <olivier.bossel@gmail.com> (https://olivierbossel.com
    */
-  _source: string;
+  private _source: string;
 
   /**
    * @name        _blockObj
@@ -140,7 +126,7 @@ class DocblockBlock {
    *
    * @author         Olivier Bossel <olivier.bossel@gmail.com> (https://olivierbossel.com
    */
-  _blockObj: any;
+  private _blockObj: any;
 
   /**
    * @name          registerTag
@@ -156,7 +142,7 @@ class DocblockBlock {
    * @since         2.0.0
    * @author         Olivier Bossel <olivier.bossel@gmail.com> (https://olivierbossel.com
    */
-  static registerTag(tagName: string, parser: any): void {
+  public static registerTag(tagName: string, parser: any): void {
     // check the params
     if (typeof parser !== 'function')
       throw new Error(
@@ -181,10 +167,11 @@ class DocblockBlock {
         filePath: null,
         packageJson: null,
         renderMarkdown: false,
+        renderMarkdownProps: [],
         markedOptions: {},
         tags: DocblockBlock.tagsMap,
       },
-      settings,
+      settings ?? {},
     );
 
     this._source = source
@@ -209,7 +196,7 @@ class DocblockBlock {
    *
    * @author         Olivier Bossel <olivier.bossel@gmail.com> (https://lotsof.dev)
    */
-  toString() {
+  public toString() {
     return this._source.trim();
   }
 
@@ -223,7 +210,7 @@ class DocblockBlock {
    *
    * @author         Olivier Bossel <olivier.bossel@gmail.com> (https://lotsof.dev)
    */
-  toObject() {
+  public toObject() {
     if (!this._blockObj) {
       throw new Error(
         `<red>${this.constructor.name}</red> Before accessing the blocks you'll need to parse the docblocks using "<yellow>await this.parse()</yellow>"`,
@@ -244,7 +231,7 @@ class DocblockBlock {
    *
    * @author         Olivier Bossel <olivier.bossel@gmail.com> (https://lotsof.dev)
    */
-  parse(): Promise<any> {
+  public parse(): Promise<any> {
     return new Promise(async (resolve) => {
       // some variables
       let currentTag: string;
@@ -316,6 +303,7 @@ class DocblockBlock {
           line = line.replace('*/', '');
           line = line.replace('* ', '');
           line = line.replace('*', '');
+          line = line.replace(/\\@/g, '@');
           if (line.trim().length) {
             currentContent.push(line);
           }
@@ -361,23 +349,35 @@ class DocblockBlock {
         }
 
         if (this.settings.renderMarkdown) {
-          function renderMarkdown(data: any): any {
-            if (data instanceof String && (<any>data).render === true) {
-              return __marked.parseInline(data.toString());
+          const renderMarkdown = (data: any, path: string[]): any => {
+            if (
+              !this.settings.renderMarkdownProps.length ||
+              !this.settings.renderMarkdownProps.includes(path.join('.'))
+            ) {
+              return data;
+            }
+            if (typeof data === 'string') {
+              if (data.split('\n').length > 1) {
+                return __marked.parse(data);
+              } else {
+                return __marked.parseInline(data);
+              }
             } else if (Array.isArray(data)) {
-              return data.map((item) => {
-                return renderMarkdown(item);
+              return data.map((item, i) => {
+                return renderMarkdown(item, [...path]);
               });
             } else if (__isPlainObject(data)) {
               Object.keys(data).forEach((key) => {
-                data[key] = renderMarkdown(data[key]);
+                data[key] = renderMarkdown(data[key], [...path, key]);
               });
               return data;
             } else {
               return data;
             }
-          }
-          finalDocblockObj[prop] = renderMarkdown(finalDocblockObj[prop]);
+          };
+          finalDocblockObj[prop] = renderMarkdown(finalDocblockObj[prop], [
+            prop,
+          ]);
         }
       }
 
@@ -473,9 +473,6 @@ DocblockBlock.registerTag('install', __installTag);
 DocblockBlock.registerTag('feature', __simpleRepeatableValue);
 DocblockBlock.registerTag('description', __descriptionTag);
 DocblockBlock.registerTag('desc', __descriptionTag);
-// DocblockBlock.registerTag('yields', __yieldsTag);
-// DocblockBlock.registerTag('typedef', __typedefTag);
-// DocblockBlock.registerTag('throws', __throwsTag);
 DocblockBlock.registerTag('see', __seeTag);
 DocblockBlock.registerTag('return', __returnTag);
 DocblockBlock.registerTag('type', __typeTag);
@@ -488,11 +485,6 @@ DocblockBlock.registerTag('namespace', __namespaceTag);
 DocblockBlock.registerTag('menu', __menuTag);
 DocblockBlock.registerTag('cssClass', __cssClass);
 DocblockBlock.registerTag('support', __supportTag);
-// DocblockBlock.registerTag('listens', __listensTag);
-// DocblockBlock.registerTag('member', __memberTag);
-// DocblockBlock.registerTag('var', __memberTag);
-// DocblockBlock.registerTag('event', __eventTag);
-// DocblockBlock.registerTag('borrows', __borrowsTag);
 DocblockBlock.registerTag('snippet', __snippetTag);
 DocblockBlock.registerTag('example', __exampleTag);
 DocblockBlock.registerTag('todo', __todoTag);

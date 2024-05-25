@@ -34,8 +34,7 @@ function support(data, blockSettings): IPlatform[] {
     if (!support.value) return;
 
     const parts = support.value.split(/\s{2,9999}|\t/).map((l) => l.trim());
-    const description = new String(parts[1] ?? '');
-    description.render = true;
+    const description = parts[1] ?? '';
 
     res.push({
       name: parts[0],

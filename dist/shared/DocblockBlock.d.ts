@@ -1,3 +1,4 @@
+import type { IDocblockBlockSettings, IDocblockBlockTagsMap } from './types.js';
 /**
  * @name                DocblockBlock
  * @namespace           shared
@@ -53,19 +54,6 @@
  * @since     2.0.0
  * @author 	Olivier Bossel <olivier.bossel@gmail.com>
  */
-export interface IDocblockBlock {
-    [key: string]: any;
-}
-export interface IDocblockBlockTagsMap {
-    [key: string]: Function;
-}
-export interface IDocblockBlockSettings {
-    filePath?: string;
-    packageJson: any;
-    renderMarkdown: boolean;
-    markedOptions: any;
-    tags: IDocblockBlockTagsMap;
-}
 declare class DocblockBlock {
     /**
      * @name            tagsMap
@@ -96,7 +84,7 @@ declare class DocblockBlock {
      *
      * @author         Olivier Bossel <olivier.bossel@gmail.com> (https://olivierbossel.com
      */
-    _source: string;
+    private _source;
     /**
      * @name        _blockObj
      * @type        {Object}
@@ -106,7 +94,7 @@ declare class DocblockBlock {
      *
      * @author         Olivier Bossel <olivier.bossel@gmail.com> (https://olivierbossel.com
      */
-    _blockObj: any;
+    private _blockObj;
     /**
      * @name          registerTag
      * @type          Function

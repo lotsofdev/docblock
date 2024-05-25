@@ -42,8 +42,7 @@ function param(data, blockSettings) {
             const parts = param.value.split(/\s{2,9999}|\t/).map((l) => l.trim());
             let typeStr = parts && parts[0] ? parts[0] : null;
             const variable = parts && parts[1] ? parts[1] : null;
-            const description = new String(parts && parts[2] ? parts[2] : null);
-            description.render = true;
+            const description = parts && parts[2] ? parts[2] : null;
             let name = variable;
             let defaultValue = undefined;
             let defaultValueStr = '';

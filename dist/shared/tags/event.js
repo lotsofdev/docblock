@@ -23,8 +23,7 @@ function eventTag(data, blockSettings) {
     data = data.map((d) => {
         if (d && d.value && typeof d.value === 'string') {
             const parts = d.value.split(/\s{2,9999}|\t/).map((l) => l.trim());
-            let eventName = parts[0], description = new String(parts[1]);
-            description.render = true;
+            let eventName = parts[0], description = parts[1];
             return {
                 name: eventName,
                 description,

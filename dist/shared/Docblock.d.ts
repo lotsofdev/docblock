@@ -1,4 +1,5 @@
 import __DocblockBlock from './DocblockBlock.js';
+import type { IDocblockSettings, IDocblockSortFnSetting } from './types.js';
 /**
  *
  * @name                    Dockblock
@@ -38,23 +39,7 @@ import __DocblockBlock from './DocblockBlock.js';
  * @since     2.0.0
  * @author 	Olivier Bossel <olivier.bossel@gmail.com>
  */
-export interface IDocblockSortFnSetting {
-    (a: any, b: any): any;
-}
-export interface IDocblockSettings {
-    filePath?: string;
-    filter?: Function;
-    filterByTag: Record<string, any>;
-    renderMarkdown: boolean;
-    markedOptions: any;
-    sortFunction?: IDocblockSortFnSetting;
-}
-export interface IDocblock {
-    _source: string;
-    blocks: __DocblockBlock[];
-    toObject(): any[];
-}
-declare class SDocblock implements IDocblock {
+declare class SDocblock {
     /**
      * @name           settings
      * @type          IDocblockSettings
@@ -74,7 +59,7 @@ declare class SDocblock implements IDocblock {
      *
      * @author 	Olivier Bossel <olivier.bossel@gmail.com>
      */
-    _source: string;
+    private _source;
     /**
      * @name            _packageJson
      * @type            String|Array<Object>
@@ -84,7 +69,7 @@ declare class SDocblock implements IDocblock {
      *
      * @author 	Olivier Bossel <olivier.bossel@gmail.com>
      */
-    _packageJson: any;
+    private _packageJson;
     /**
      * @name            _blocks
      * @type            Array<Object>
@@ -94,7 +79,7 @@ declare class SDocblock implements IDocblock {
      *
      * @author 	Olivier Bossel <olivier.bossel@gmail.com>
      */
-    _blocks: any[];
+    private _blocks;
     /**
      * @name            constructor
      * @type            Function
@@ -141,7 +126,7 @@ declare class SDocblock implements IDocblock {
      * @since       2.0.0
      * @author 	Olivier Bossel <olivier.bossel@gmail.com> (https://lotsof.dev)
      */
-    _parsed: boolean;
+    private _parsed;
     parse(string?: string): Promise<__DocblockBlock[]>;
     /**
      * @name          toObject

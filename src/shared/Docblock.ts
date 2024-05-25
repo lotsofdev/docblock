@@ -6,6 +6,12 @@ import { __isNode } from '@lotsof/sugar/is';
 import { __deepMerge } from '@lotsof/sugar/object';
 import __DocblockBlock from './DocblockBlock.js';
 
+import { __getConfig } from '@lotsof/config';
+
+import type { IDocblockSettings, IDocblockSortFnSetting } from './types.js';
+
+import __defaults from './defaults.js';
+
 /**
  *
  * @name                    Dockblock
@@ -46,27 +52,8 @@ import __DocblockBlock from './DocblockBlock.js';
  * @author 	Olivier Bossel <olivier.bossel@gmail.com>
  */
 
-export interface IDocblockSortFnSetting {
-  (a: any, b: any);
-}
-export interface IDocblockSettings {
-  filePath?: string;
-  filter?: Function;
-  filterByTag: Record<string, any>;
-  renderMarkdown: boolean;
-  markedOptions: any;
-  sortFunction?: IDocblockSortFnSetting;
-}
-
-export interface IDocblock {
-  // new (source: string, settings?: IDocblockSettings);
-  _source: string;
-  blocks: __DocblockBlock[];
-  toObject(): any[];
-}
-
 // @ts-ignore
-class SDocblock implements IDocblock {
+class SDocblock {
   /**
    * @name           settings
    * @type          IDocblockSettings
@@ -76,7 +63,7 @@ class SDocblock implements IDocblock {
    *
    * @author 	Olivier Bossel <olivier.bossel@gmail.com>
    */
-  settings: IDocblockSettings;
+  public settings: IDocblockSettings;
 
   /**
    * @name            _source
@@ -87,7 +74,7 @@ class SDocblock implements IDocblock {
    *
    * @author 	Olivier Bossel <olivier.bossel@gmail.com>
    */
-  _source: string = '';
+  private _source: string = '';
 
   /**
    * @name            _packageJson
@@ -98,7 +85,7 @@ class SDocblock implements IDocblock {
    *
    * @author 	Olivier Bossel <olivier.bossel@gmail.com>
    */
-  _packageJson: any;
+  private _packageJson: any;
 
   /**
    * @name            _blocks
@@ -109,7 +96,7 @@ class SDocblock implements IDocblock {
    *
    * @author 	Olivier Bossel <olivier.bossel@gmail.com>
    */
-  _blocks: any[] = [];
+  private _blocks: any[] = [];
 
   /**
    * @name            constructor
@@ -121,32 +108,11 @@ class SDocblock implements IDocblock {
    */
   constructor(source: string, settings?: Partial<IDocblockSettings>) {
     this.settings = __deepMerge(
-      {
-        filter: undefined,
-        filterByTag: undefined,
-        sortFunction: (a, b) => {
-          let res = 0;
-
-          if (!b || !a) return res;
-
-          const aObj = a.toObject(),
-            bObj = b.toObject();
-
-          // if (.object.namespace && !aObj.namespace) res -= 1;
-          if (bObj.namespace) res += 1;
-          if (bObj.type?.toLowerCase?.() === 'class') res += 1;
-          if (bObj.constructor) res += 1;
-          if (bObj.private) res += 1;
-          if (bObj.type?.toLowerCase?.() === 'function') res += 1;
-          if (bObj.name?.length > aObj.name?.length) res += 1;
-          return res;
-        },
-        filePath: null,
-        renderMarkdown: false,
-        markedOptions: {},
-      },
+      __defaults.settings,
+      __getConfig('docblock.settings') ?? {},
       settings || {},
     );
+
     // check if the source is path
     if (__isPath(source)) {
       if (!__isNode())
@@ -217,8 +183,8 @@ class SDocblock implements IDocblock {
    * @since       2.0.0
    * @author 	Olivier Bossel <olivier.bossel@gmail.com> (https://lotsof.dev)
    */
-  _parsed = false;
-  parse(string = this._source): Promise<__DocblockBlock[]> {
+  private _parsed = false;
+  public parse(string = this._source): Promise<__DocblockBlock[]> {
     return new Promise(async (resolve) => {
       // extract each docblocks
       const regDefault = /(['"`\s]+)?(\/\*{2})([\s\S]+?)(\*\/)/g;
@@ -316,6 +282,7 @@ class SDocblock implements IDocblock {
           packageJson: this._packageJson,
           filePath: this.settings.filePath || '',
           renderMarkdown: this.settings.renderMarkdown,
+          renderMarkdownProps: this.settings.renderMarkdownProps,
           markedOptions: this.settings.markedOptions,
         });
 
@@ -352,7 +319,7 @@ class SDocblock implements IDocblock {
    * @since       2.0.0
    * @author 	Olivier Bossel <olivier.bossel@gmail.com> (https://lotsof.dev)
    */
-  toObject() {
+  public toObject() {
     if (!this._parsed) {
       throw new Error(
         `<red>[SDocblock]</red> Before accessing any block, you MUST call the "parse" async method...`,
@@ -373,7 +340,7 @@ class SDocblock implements IDocblock {
    * @since       2.0.0
    * @author 	Olivier Bossel <olivier.bossel@gmail.com> (https://lotsof.dev)
    */
-  toString() {
+  public toString() {
     if (!this._parsed) {
       throw new Error(
         `<red>[SDocblock]</red> Before accessing any block, you MUST call the "parse" async method...`,

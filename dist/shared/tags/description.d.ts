@@ -17,5 +17,5 @@
  * @since     2.0.0
  * @author 	Olivier Bossel <olivier.bossel@gmail.com>
  */
-declare function description(data: any, blockSettings: any): String | "";
+declare function description(data: any, blockSettings: any): any;
 export default description;
