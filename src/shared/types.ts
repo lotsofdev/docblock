@@ -15,6 +15,10 @@ export interface IDocblockSettings {
   sortFunction?: IDocblockSortFnSetting;
 }
 
+export interface IDocblockBlock {
+  [key: string]: any;
+}
+
 export interface IDocblockBlockTagsMap {
   [key: string]: Function;
 }

@@ -18,8 +18,6 @@
   },
   "main": "dist/shared/exports.js",
   "module": "dist/esm/shared/exports.js",
-  "exports": {
-    "default": "./dist/shared/exports.js"
-  },
+  "types": "src/shared/exports.ts",
   "homepage": "https://lotsof.dev"
 }
