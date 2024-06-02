@@ -35,7 +35,7 @@ function example(data, blockSettings) {
             description: parts[2],
             code: Array.isArray(item.content)
                 ? item.content.join('\n').trim().replace(/\\@/, '@')
-                : item.content.replace(/\\@/, '@'),
+                : item.content.trim().replace(/\\@/, '@'),
         };
         if (result.title) {
             result.title = result.title;
