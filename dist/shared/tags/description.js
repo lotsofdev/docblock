@@ -1,4 +1,5 @@
 // @ts-nocheck
+import { __escapeHtml } from '@lotsof/sugar/html';
 /**
  * @name              description
  * @namespace           shared.tags
@@ -30,7 +31,7 @@ function description(data, blockSettings) {
         .map((c) => c.replace(/^\s/, ''))
         .join('\n')
         .trim();
-    return description;
+    return __escapeHtml(description);
 }
 export default description;
 //# sourceMappingURL=description.js.map
