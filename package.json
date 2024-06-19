@@ -1,6 +1,6 @@
 {
   "name": "@lotsof/docblock",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Powerful class that let you parse docblocks with some registered tags like \"name\", \"author\", and a lot more...",
   "type": "module",
   "author": "Olivier Bossel <olivier.bossel@gmail.com> (https://coffeekraken.io)",
@@ -10,8 +10,8 @@
     "build": "tsc"
   },
   "dependencies": {
-    "@lotsof/sugar": "^0.0.1",
-    "@lotsof/config": "^0.0.1",
+    "@lotsof/sugar": "^1.0.0",
+    "@lotsof/config": "^1.0.0",
     "marked": "^9.0.2",
     "minimatch": "^3.1.2",
     "typescript": "^5.4.5"

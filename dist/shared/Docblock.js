@@ -111,7 +111,7 @@ class SDocblock {
                 throw new Error(`Sorry but the passed source path "<yellow>${source}</yellow>" does not exists on the filesystem...`);
             this.settings.filePath = source;
             this._source = __fs.readFileSync(source, 'utf8');
-            this._packageJson = __packageJsonSync({
+            this._packageJson = __packageJsonSync('.', {
                 cwd: source,
             });
         }

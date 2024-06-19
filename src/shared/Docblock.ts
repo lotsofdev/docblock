@@ -125,7 +125,7 @@ class SDocblock {
         );
       this.settings.filePath = source;
       this._source = __fs.readFileSync(source, 'utf8');
-      this._packageJson = __packageJsonSync({
+      this._packageJson = __packageJsonSync('.', {
         cwd: source,
       });
     } else {
