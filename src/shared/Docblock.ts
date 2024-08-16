@@ -8,7 +8,7 @@ import __DocblockBlock from './DocblockBlock.js';
 
 import { __getConfig } from '@lotsof/config';
 
-import type { IDocblockSettings, IDocblockSortFnSetting } from './types.js';
+import type { TDocblockSettings, TDocblockSortFnSetting } from './types.js';
 
 import __defaults from './defaults.js';
 
@@ -56,14 +56,14 @@ import __defaults from './defaults.js';
 class SDocblock {
   /**
    * @name           settings
-   * @type          IDocblockSettings
+   * @type          TDocblockSettings
    * @public
    *
    * Store the settings
    *
    * @author 	Olivier Bossel <olivier.bossel@gmail.com>
    */
-  public settings: IDocblockSettings;
+  public settings: TDocblockSettings;
 
   /**
    * @name            _source
@@ -106,7 +106,7 @@ class SDocblock {
    *
    * @author 	Olivier Bossel <olivier.bossel@gmail.com>
    */
-  constructor(source: string, settings?: Partial<IDocblockSettings>) {
+  constructor(source: string, settings?: Partial<TDocblockSettings>) {
     this.settings = __deepMerge(
       __defaults.settings,
       __getConfig('docblock.settings') ?? {},
@@ -146,7 +146,7 @@ class SDocblock {
    * @since       2.0.0
    * @author 	Olivier Bossel <olivier.bossel@gmail.com>
    */
-  sort(sortFunction?: IDocblockSortFnSetting) {
+  sort(sortFunction?: TDocblockSortFnSetting) {
     if (!sortFunction) sortFunction = this.settings.sortFunction;
     this._blocks = this._blocks.sort(sortFunction);
     return this;

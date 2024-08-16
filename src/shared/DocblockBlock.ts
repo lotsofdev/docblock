@@ -4,7 +4,7 @@ import { __deepMerge } from '@lotsof/sugar/object';
 import { __namespaceCompliant } from '@lotsof/sugar/string';
 import { marked as __marked } from 'marked';
 
-import type { IDocblockBlockSettings, IDocblockBlockTagsMap } from './types.js';
+import type { TDocblockBlockSettings, TDocblockBlockTagsMap } from './types.js';
 
 import __authorTag from './tags/author.js';
 import __contributorTag from './tags/contributor.js';
@@ -93,18 +93,18 @@ class DocblockBlock {
    *
    * @author 	Olivier Bossel <olivier.bossel@gmail.com>
    */
-  public static tagsMap: IDocblockBlockTagsMap = {};
+  public static tagsMap: TDocblockBlockTagsMap = {};
 
   /**
    * @name           settings
-   * @type          IDocblockBlockSettings
+   * @type          TDocblockBlockSettings
    * @public
    *
    * Store the settings
    *
    * @author 	Olivier Bossel <olivier.bossel@gmail.com>
    */
-  public settings: IDocblockBlockSettings;
+  public settings: TDocblockBlockSettings;
 
   /**
    * @name          _source
@@ -161,7 +161,7 @@ class DocblockBlock {
    *
    * @author         Olivier Bossel <olivier.bossel@gmail.com> (https://lotsof.dev)
    */
-  constructor(source, settings?: Partial<IDocblockBlockSettings>) {
+  constructor(source, settings?: Partial<TDocblockBlockSettings>) {
     this.settings = __deepMerge(
       {
         filePath: null,

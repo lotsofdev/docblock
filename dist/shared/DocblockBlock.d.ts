@@ -1,4 +1,4 @@
-import type { IDocblockBlockSettings, IDocblockBlockTagsMap } from './types.js';
+import type { TDocblockBlockSettings, TDocblockBlockTagsMap } from './types.js';
 /**
  * @name                DocblockBlock
  * @namespace           shared
@@ -64,17 +64,17 @@ declare class DocblockBlock {
      *
      * @author 	Olivier Bossel <olivier.bossel@gmail.com>
      */
-    static tagsMap: IDocblockBlockTagsMap;
+    static tagsMap: TDocblockBlockTagsMap;
     /**
      * @name           settings
-     * @type          IDocblockBlockSettings
+     * @type          TDocblockBlockSettings
      * @public
      *
      * Store the settings
      *
      * @author 	Olivier Bossel <olivier.bossel@gmail.com>
      */
-    settings: IDocblockBlockSettings;
+    settings: TDocblockBlockSettings;
     /**
      * @name          _source
      * @type          String
@@ -119,7 +119,7 @@ declare class DocblockBlock {
      *
      * @author         Olivier Bossel <olivier.bossel@gmail.com> (https://lotsof.dev)
      */
-    constructor(source: any, settings?: Partial<IDocblockBlockSettings>);
+    constructor(source: any, settings?: Partial<TDocblockBlockSettings>);
     /**
      * @name          toString
      * @type          Function

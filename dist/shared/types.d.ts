@@ -1,29 +1,29 @@
-export interface IDocblockConfig {
-    settings: IDocblockSettings;
-}
-export interface IDocblockSortFnSetting {
+export type TDocblockConfig = {
+    settings: TDocblockSettings;
+};
+export type TDocblockSortFnSetting = {
     (a: any, b: any): any;
-}
-export interface IDocblockSettings {
+};
+export type TDocblockSettings = {
     filePath?: string;
     filter?: Function;
     filterByTag?: Record<string, any>;
     renderMarkdown: boolean;
     renderMarkdownProps: string[];
     markedOptions: any;
-    sortFunction?: IDocblockSortFnSetting;
-}
-export interface IDocblockBlock {
+    sortFunction?: TDocblockSortFnSetting;
+};
+export type TDocblockBlock = {
     [key: string]: any;
-}
-export interface IDocblockBlockTagsMap {
+};
+export type TDocblockBlockTagsMap = {
     [key: string]: Function;
-}
-export interface IDocblockBlockSettings {
+};
+export type TDocblockBlockSettings = {
     filePath?: string;
     packageJson: any;
     renderMarkdown: boolean;
     renderMarkdownProps: string[];
     markedOptions: any;
-    tags: IDocblockBlockTagsMap;
-}
+    tags: TDocblockBlockTagsMap;
+};

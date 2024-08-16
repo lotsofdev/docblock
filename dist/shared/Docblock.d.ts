@@ -1,5 +1,5 @@
 import __DocblockBlock from './DocblockBlock.js';
-import type { IDocblockSettings, IDocblockSortFnSetting } from './types.js';
+import type { TDocblockSettings, TDocblockSortFnSetting } from './types.js';
 /**
  *
  * @name                    Dockblock
@@ -42,14 +42,14 @@ import type { IDocblockSettings, IDocblockSortFnSetting } from './types.js';
 declare class SDocblock {
     /**
      * @name           settings
-     * @type          IDocblockSettings
+     * @type          TDocblockSettings
      * @public
      *
      * Store the settings
      *
      * @author 	Olivier Bossel <olivier.bossel@gmail.com>
      */
-    settings: IDocblockSettings;
+    settings: TDocblockSettings;
     /**
      * @name            _source
      * @type            String|Array<Object>
@@ -88,7 +88,7 @@ declare class SDocblock {
      *
      * @author 	Olivier Bossel <olivier.bossel@gmail.com>
      */
-    constructor(source: string, settings?: Partial<IDocblockSettings>);
+    constructor(source: string, settings?: Partial<TDocblockSettings>);
     /**
      * @name        sort
      * @type        Function
@@ -102,7 +102,7 @@ declare class SDocblock {
      * @since       2.0.0
      * @author 	Olivier Bossel <olivier.bossel@gmail.com>
      */
-    sort(sortFunction?: IDocblockSortFnSetting): this;
+    sort(sortFunction?: TDocblockSortFnSetting): this;
     /**
      * @name        blocks
      * @type        Array

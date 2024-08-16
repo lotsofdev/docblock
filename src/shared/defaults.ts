@@ -1,6 +1,6 @@
-import { IDocblockConfig } from './types.js';
+import { TDocblockConfig } from './types.js';
 
-const defaults: IDocblockConfig = {
+const defaults: TDocblockConfig = {
   settings: {
     filter: undefined,
     filterByTag: undefined,

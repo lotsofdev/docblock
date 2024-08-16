@@ -1,4 +1,4 @@
-import { IResolveTypeStringResult } from '../../../../sugar/dist/node/type/resolveTypeString.js';
+import { TResolveTypeStringResult } from '../../../../sugar/dist/node/type/resolveTypeString.js';
 /**
  * @name              type
  * @namespace           shared.tags
@@ -18,5 +18,5 @@ import { IResolveTypeStringResult } from '../../../../sugar/dist/node/type/resol
  * @since     2.0.0
  * @author 	Olivier Bossel <olivier.bossel@gmail.com>
  */
-declare function typeTag(data: any, blockSettings: any): Promise<IResolveTypeStringResult>;
+declare function typeTag(data: any, blockSettings: any): Promise<TResolveTypeStringResult>;
 export default typeTag;
